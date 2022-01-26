@@ -1,26 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { VFC } from 'react';
+import { BrowserRouter, Route, Switch } from "react-router-dom"
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { Layout } from './components/Layout';
+import { TodoListMemo } from './components/Todo/TodoList';
+import { ReactQueryDevtools } from 'react-query/devtools'
 
-function App() {
+const defualtQueryClient: QueryClient = new QueryClient({
+  defaultOptions: {
+      queries: {
+        retry: false,
+        refetchOnWindowFocus: false,
+        cacheTime: 30000,
+      }
+  }
+})
+
+const App: VFC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <QueryClientProvider client={defualtQueryClient}>
+      <BrowserRouter>
+        <Layout>
+          <Switch>
+            <Route exact path="/">
+              <TodoListMemo />
+            </Route>
+          </Switch>
+        </Layout>
+      </BrowserRouter>
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
+  )
 }
 
 export default App;

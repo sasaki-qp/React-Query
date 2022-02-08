@@ -1,5 +1,5 @@
-import axios from "axios"
 import { QueryClient, useQueryClient, useMutation } from "react-query"
+import { httpClient } from "../helper/httpClient";
 import { TodoType } from "../types/todo"
 
 export const useMutateTodos = () => {
@@ -7,7 +7,7 @@ export const useMutateTodos = () => {
 
     const checkTodoMutation = useMutation(
         (todo: TodoType) =>
-            axios.put<TodoType>(`${process.env.REACT_APP_URL}todos/${todo.id}/`, todo),
+            httpClient.put<TodoType>(`todos/${todo.id}/`, todo),
         {
             onSuccess: (res, old) => {
                 const preTodos = queryClient.getQueryData<TodoType[]>("todos")
@@ -29,7 +29,7 @@ export const useMutateTodos = () => {
 
     const deleteTodoMutation = useMutation(
         (id: number) => 
-            axios.delete(`${process.env.REACT_APP_URL}todos/${id}/`),
+        httpClient.delete(`todos/${id}/`),
         {
             onSuccess: (res, oldId) => {
                 const preTodos = queryClient.getQueryData<TodoType[]>("todos")

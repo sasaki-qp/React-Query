@@ -1,9 +1,9 @@
-import axios from "axios";
 import { useQuery } from "react-query";
+import { httpClient } from "../helper/httpClient";
 import { TodoType } from "../types/todo";
 
 const getTodos = async() : Promise<TodoType[]> => {
-    const { data } = await axios.get<TodoType[]>(`${process.env.REACT_APP_URL}todos/`);
+    const { data } = await httpClient.get<TodoType[]>(`todos/`);
     return data;
 }
 

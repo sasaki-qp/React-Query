@@ -1,11 +1,15 @@
 import { VFC, memo } from 'react'
-import { idText } from 'typescript'
-import { useQueryTodos } from '../../hooks/useQueryTodos'
+import { useQueryTodos, useRefetchTodos } from '../../hooks/useQueryTodos'
 import { TodoMemo } from './Todo'
 
 const TodoList: VFC = () => {
-    console.log("DEBUG rendered todo list component")
     const { status, data } = useQueryTodos()
+    const { refetch } = useRefetchTodos();
+
+    const handler = async(event: React.MouseEvent<HTMLElement, MouseEvent>) => {
+        event.preventDefault()
+        await refetch()
+    }
     
     if(status === "loading") return <div>Loading ...</div>
     if(status === "error") return <div>Error ...</div>
@@ -19,6 +23,13 @@ const TodoList: VFC = () => {
                     </li>
                 ))}
             </ul>
+            <div>
+                <button
+                    onClick={handler}
+                >
+                    refetch
+                </button>
+            </div>
         </div>
     )
 }

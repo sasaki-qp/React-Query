@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { Layout } from './components/Layout';
 import { TodoListMemo } from './components/Todo/TodoList';
 import { ReactQueryDevtools } from 'react-query/devtools'
+import { Test } from './components/Test';
 
 const defualtQueryClient: QueryClient = new QueryClient({
   defaultOptions: {
@@ -23,6 +24,9 @@ const App: VFC = () => {
           <Switch>
             <Route exact path="/">
               <TodoListMemo />
+            </Route>
+            <Route exact path="/test">
+              <Test />
             </Route>
           </Switch>
         </Layout>

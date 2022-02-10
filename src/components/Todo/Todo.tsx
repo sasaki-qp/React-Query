@@ -2,6 +2,7 @@ import { VFC, memo} from 'react'
 import { TodoType } from '../../types/todo'
 import { BadgeCheckIcon, TagIcon, TrashIcon } from '@heroicons/react/solid'
 import { useMutateTodos } from '../../hooks/useMutationTodos'
+import { useHistory } from 'react-router'
 
 type Props = {
     todo: TodoType
@@ -9,6 +10,11 @@ type Props = {
 
 const Todo: VFC<Props> = ({ todo }) => {
     const { checkTodoMutation, deleteTodoMutation } = useMutateTodos();
+    const history = useHistory()
+    const handler = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
+        event.preventDefault()
+        history.push("/test")
+    }
     return (
         <div>
             <li className="my-3">
@@ -38,6 +44,11 @@ const Todo: VFC<Props> = ({ todo }) => {
                     />
                 </div>
             </li>
+            <button
+                onClick={handler}
+            >
+                go to test page
+            </button>
         </div>
     )
 }
